@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NumberButton extends JButton implements ActionListener {
-    private int value;
+    private final int value;
 
 
     public NumberButton(int value){
@@ -18,5 +18,6 @@ public class NumberButton extends JButton implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("You pressed " + value);
+        //send to the CalulatorFrame that this value was pressed
     }
 }
