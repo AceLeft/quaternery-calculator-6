@@ -1,13 +1,15 @@
 package GUI;
 
-import Calculator.GUITest;
+
+import Calculator.Operands;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CalculatorFrame {
+    private String firstNumber = "0";
+    private String secondNumber = "0";
+
     public CalculatorFrame(){
         JFrame frame = new JFrame();
         JPanel mainPanel = new JPanel();
@@ -24,51 +26,13 @@ public class CalculatorFrame {
         mainPanel.add(two);
         mainPanel.add(three);
 
-        JButton addButton = new JButton("+");
-        addButton.addActionListener(new ActionListener() {
-            /*While these _can_ be replaced with Lambda,
-              I'm going to forgoe that until we figure out how
-              we get the number AFTER add is pressed
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GUITest.print("add");
-            }
-        });
-        JButton subtractButton = new JButton("-");
-        subtractButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GUITest.print("sub");
-            }
-        });
-        JButton multiplyButton = new JButton("*");
-        multiplyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GUITest.print("times");
-            }
-        });
-        JButton divideButton = new JButton("/");
-        divideButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GUITest.print("div");
-            }
-        });
-        JButton equalsButton = new JButton("=");
-        equalsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GUITest.print("equals");
-            }
-        });
+        OperandButton addButton = new OperandButton(Operands.ADD, "+");
 
         mainPanel.add(addButton);
-        mainPanel.add(subtractButton);
-        mainPanel.add(divideButton);
-        mainPanel.add(multiplyButton);
-        mainPanel.add(equalsButton);
+//        mainPanel.add(subtractButton);
+//        mainPanel.add(divideButton);
+//        mainPanel.add(multiplyButton);
+//        mainPanel.add(equalsButton);
 
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
