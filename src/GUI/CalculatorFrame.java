@@ -9,6 +9,7 @@ import java.awt.*;
 public class CalculatorFrame {
     private String firstNumber = "0";
     private String secondNumber = "0";
+    private final JLabel outputLabel;
 
     public CalculatorFrame(){
         JFrame frame = new JFrame();
@@ -16,10 +17,14 @@ public class CalculatorFrame {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
         mainPanel.setLayout(new GridLayout(1,4));
 
-        NumberButton zero = new NumberButton(0);
-        NumberButton one = new NumberButton(1);
-        NumberButton two = new NumberButton(2);
-        NumberButton three = new NumberButton(3);
+        outputLabel = new JLabel();
+        outputLabel.setBorder(BorderFactory.createEtchedBorder());
+        mainPanel.add(outputLabel);
+
+        NumberButton zero = new NumberButton(0, outputLabel);
+        NumberButton one = new NumberButton(1, outputLabel);
+        NumberButton two = new NumberButton(2, outputLabel);
+        NumberButton three = new NumberButton(3, outputLabel);
 
         mainPanel.add(zero);
         mainPanel.add(one);
@@ -40,4 +45,5 @@ public class CalculatorFrame {
         frame.pack();
         frame.setVisible(true);
     }
+
 }

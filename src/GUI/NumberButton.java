@@ -7,17 +7,18 @@ import java.awt.event.ActionListener;
 
 public class NumberButton extends JButton implements ActionListener {
     private final int value;
+    private final JLabel numberLabel;
 
-
-    public NumberButton(int value){
+    public NumberButton(int value, JLabel numberLabel){
         super(value + "");
         this.value = value;
+        this.numberLabel = numberLabel;
         addActionListener(this);
 
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("You pressed " + value);
-        //send to the CalulatorFrame that this value was pressed
+        String currentText = numberLabel.getText();
+        numberLabel.setText(currentText + value);
     }
 }
