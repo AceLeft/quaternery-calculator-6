@@ -5,6 +5,8 @@ import Calculator.Operands;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CalculatorFrame {
     private String firstNumber = "0";
@@ -21,15 +23,16 @@ public class CalculatorFrame {
         outputLabel.setBorder(BorderFactory.createEtchedBorder());
         mainPanel.add(outputLabel);
 
-        NumberButton zero = new NumberButton(0, outputLabel);
-        NumberButton one = new NumberButton(1, outputLabel);
-        NumberButton two = new NumberButton(2, outputLabel);
-        NumberButton three = new NumberButton(3, outputLabel);
+        NumberButton zero = new NumberButton(0);
+        NumberButton one = new NumberButton(1);
+        NumberButton two = new NumberButton(2);
+        NumberButton three = new NumberButton(3);
+        NumberButton[] numberButtons = {zero,one,two,three};
 
-        mainPanel.add(zero);
-        mainPanel.add(one);
-        mainPanel.add(two);
-        mainPanel.add(three);
+        for( NumberButton button : numberButtons){
+            button.addActionListener(e -> appendToOutputLabel(button.getValue()));
+            mainPanel.add(button);
+        }
 
         OperandButton addButton = new OperandButton(Operands.ADD, "+");
 
@@ -46,4 +49,8 @@ public class CalculatorFrame {
         frame.setVisible(true);
     }
 
+    private void appendToOutputLabel(int numberAppended){
+        String currentText = outputLabel.getText();
+        outputLabel.setText(currentText + numberAppended);
+    }
 }
