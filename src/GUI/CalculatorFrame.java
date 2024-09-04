@@ -10,6 +10,7 @@ import java.awt.*;
 public class CalculatorFrame {
     private String firstNumber = "0";
     private String secondNumber = "0";
+    private Operands currentlySelectedOperand = null;
     private final JLabel outputLabel;
 
     public CalculatorFrame(){
@@ -38,11 +39,20 @@ public class CalculatorFrame {
 
         OperandButton addButton = new OperandButton(Operands.ADD, "+");
 
-        buttonPanel.add(addButton);
-//        mainPanel.add(subtractButton);
-//        mainPanel.add(divideButton);
-//        mainPanel.add(multiplyButton);
-//        mainPanel.add(equalsButton);
+        OperandButton[] operandButtons = {addButton};
+
+        for( OperandButton button : operandButtons){
+            button.addActionListener(e -> {
+                storeOutput();
+                currentlySelectedOperand = button.getOperand();
+            });
+            buttonPanel.add(button);
+        }
+
+        JButton equals = new JButton("=");
+        equals.addActionListener(e -> performEquals());
+
+        buttonPanel.add(equals);
 
         mainPanel.add(buttonPanel);
 
@@ -53,8 +63,36 @@ public class CalculatorFrame {
         frame.setVisible(true);
     }
 
+    private void performEquals() {
+        storeOutput();
+        String result = String.valueOf((1+2));
+        //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
+        System.out.println("FIRSTNUMBER" + firstNumber);
+        System.out.println("SECONDNUMBER" + secondNumber);
+        System.out.println("OPERAND" + currentlySelectedOperand);
+        currentlySelectedOperand = null;
+        firstNumber = result;
+        secondNumber = "0";
+
+    }
+
+    private void storeOutput() {
+        if(currentlySelectedOperand != null){
+            secondNumber = outputLabel.getText();
+        }
+        else{
+            firstNumber = outputLabel.getText();
+            secondNumber = "0";
+        }
+        //Clear the output label?
+        outputLabel.setText("");
+
+
+    }
+
     private void appendToOutputLabel(int numberAppended){
         String currentText = outputLabel.getText();
         outputLabel.setText(currentText + numberAppended);
+        
     }
 }
