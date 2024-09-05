@@ -62,16 +62,20 @@ public class CalculatorFrame {
         JButton equals = new JButton("=");
         JButton square = new JButton("x²");
         JButton squareRoot = new JButton("√");
+        JButton clearButton = new JButton("Clear All");
 
 
         equals.addActionListener(e -> performEquals(e.getActionCommand())); //sends actionCommand to performEquals method
         square.addActionListener(e -> performEquals(e.getActionCommand()));
         squareRoot.addActionListener(e -> performEquals(e.getActionCommand()));
+        clearButton.addActionListener((e) -> { this.clearCalculator();  // Method to clear the state and reset
+        });
 
 
         buttonPanel.add(equals);
         buttonPanel.add(square);
         buttonPanel.add(squareRoot);
+        buttonPanel.add(clearButton);
 
         mainPanel.add(buttonPanel);
 
@@ -122,6 +126,12 @@ public class CalculatorFrame {
     private void appendToOutputLabel(int numberAppended){
         String currentText = outputLabel.getText();
         outputLabel.setText(currentText + numberAppended);
+    }
 
+    private void clearCalculator() {
+        this.firstNumber = "0";
+        this.secondNumber = "0";
+        this.currentlySelectedOperand = null;
+        this.outputLabel.setText("");
     }
 }
