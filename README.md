@@ -27,6 +27,10 @@ DISCUSSION:
 Meeting 4: 9/4/2024, 3:00 pm
 * Riley and Hunter met briefly at Bracken
 
+Meeting 5: 9/5/2024, 5:00 pm
+* Riley, Hunter and Brooke met in Robert bell
+* Payton joined online
+
 DISCUSSION:
 * Discussed the lack of need for dedicated base 10/ base 4 conversions after finding built-in functions
 * Discussed GUI and Logic separation
