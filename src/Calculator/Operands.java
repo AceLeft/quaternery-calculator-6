@@ -1,5 +1,10 @@
 package Calculator;
 
 public enum Operands {
-    ADD
+    ADD,
+    SUBTRACT,
+    MULTIPLY,
+    DIVIDE,
+    SQUARE,
+    SQUAREROOT
 }
