@@ -1,117 +1,144 @@
 package GUI;
 
-import Calculator.GUITest;
+import Calculator.Calculate;
+import Calculator.Operands;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
-public class CalculatorFrame {
 
-    private String op = "";
-    private String firstNumber = "";
-    private String secondNumber = "";
+public class CalculatorFrame {
+    private String firstNumber = "0";
+    private String secondNumber = "0";
+    private Operands currentlySelectedOperand = null;
+    private final JLabel outputLabel;
+    private final Calculate calc;
+
     public CalculatorFrame(){
         JFrame frame = new JFrame();
         JPanel mainPanel = new JPanel();
-        JTextField textField = new JTextField(16);
-        JButton[] numberButtons = new JButton[9];
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10,50,10,50));
+        mainPanel.setLayout(new GridLayout(2,1));
+        calc = new Calculate();
 
-        JButton zero = new JButton(String.valueOf(0));
-        JButton one = new JButton(String.valueOf(1));
-        JButton two = new JButton(String.valueOf(2));
-        JButton three = new JButton(String.valueOf(3));
+        outputLabel = new JLabel();
+        outputLabel.setBorder(BorderFactory.createEtchedBorder());
+        mainPanel.add(outputLabel);
 
-        mainPanel.add(textField);
-
-        mainPanel.add(zero);
-        mainPanel.add(one);
-        mainPanel.add(two);
-        mainPanel.add(three);
-
-        JButton addButton = new JButton("+");
-        JButton subtractButton = new JButton("-");
-        JButton multiplyButton = new JButton("*");
-        JButton divideButton = new JButton("/");
-        JButton equalsButton = new JButton("=");
-
-        mainPanel.add(addButton);
-        mainPanel.add(subtractButton);
-        mainPanel.add(divideButton);
-        mainPanel.add(multiplyButton);
-        mainPanel.add(equalsButton);
-
-        numberButtons[0] = zero;
-        numberButtons[1] = one;
-        numberButtons[2] = two;
-        numberButtons[3] = three;
-
-        numberButtons[4] = addButton;
-        numberButtons[5] = subtractButton;
-        numberButtons[6] = multiplyButton;
-        numberButtons[7] = divideButton;
-        numberButtons[8] = equalsButton;
+        NumberButton zero = new NumberButton(0);
+        NumberButton one = new NumberButton(1);
+        NumberButton two = new NumberButton(2);
+        NumberButton three = new NumberButton(3);
+        NumberButton[] numberButtons = {zero,one,two,three};
 
 
-        for (int i = 0; i < numberButtons.length; i++) {
-            numberButtons[i].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(0,4));
 
-                    String command = e.getActionCommand();
-
-                    if (Objects.equals(command, "0") || Objects.equals(command, "1") || Objects.equals(command, "2") || Objects.equals(command, "3")) {
-
-                        if (op.isEmpty()) {
-                            secondNumber = textField.getText() + command;
-                            textField.setText(secondNumber); //gets second # input
-
-                        }
-                        else {
-                            firstNumber = textField.getText() + command;
-                            textField.setText(firstNumber); //gets first # input
-                        }
-
-                        System.out.println("First Number: " + firstNumber);
-                        System.out.println("Second Number: " + secondNumber);
-
-                    }
-                    else  {
-                        if (command != "=") {
-                            op = command;
-                            System.out.println(op);
-                            textField.setText("");
-                        }
-                    }
-
-                    if (command == "=") {
-                        System.out.println(op);
-                        Calculate(firstNumber ,secondNumber, op);
-                    }
-                }});
+        for(NumberButton button : numberButtons){
+            button.addActionListener(e -> appendToOutputLabel(button.getValue()));
+            buttonPanel.add(button);
         }
 
-        frame.add(mainPanel);
+        OperandButton addButton = new OperandButton(Operands.ADD, "+");
+        OperandButton subtractButton = new OperandButton(Operands.SUBTRACT, "-");
+        OperandButton multiplyButton = new OperandButton(Operands.MULTIPLY, "*");
+        OperandButton divideButton = new OperandButton(Operands.DIVIDE, "/");
+
+        OperandButton[] operandButtons = {addButton, subtractButton, multiplyButton, divideButton};
+
+
+        for( OperandButton button : operandButtons){
+            button.addActionListener(e -> {
+                storeOutput();
+                currentlySelectedOperand = button.getOperand();
+            });
+            buttonPanel.add(button);
+        }
+
+        JButton equals = new JButton("=");
+        JButton square = new JButton("x²");
+        JButton squareRoot = new JButton("√");
+
+
+        equals.addActionListener(e -> performEquals(e.getActionCommand())); //sends actionCommand to performEquals method
+        square.addActionListener(e -> performEquals(e.getActionCommand()));
+        squareRoot.addActionListener(e -> performEquals(e.getActionCommand()));
+
+
+        buttonPanel.add(equals);
+        buttonPanel.add(square);
+        buttonPanel.add(squareRoot);
+
+        mainPanel.add(buttonPanel);
+
+        frame.add(mainPanel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Quaternary Calculator");
         frame.pack();
-        frame.setSize(200, 200);
         frame.setVisible(true);
     }
 
-    public void Calculate(String val1, String val2, String operator) {
+    private void performEquals(String command) {
+        storeOutput();
+        String result = String.valueOf((1+2));
+        System.out.println(command);
+        //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
+        if (Objects.equals(command, "x²")) {
+            currentlySelectedOperand = Operands.SQUARE;
+        }
+        else if (Objects.equals(command, "√")) {
+            currentlySelectedOperand = Operands.SQUAREROOT;
+        }
+        System.out.println("FIRSTNUMBER " + firstNumber);
+        System.out.println("SECONDNUMBER " + secondNumber);
+        System.out.println("OPERAND " + currentlySelectedOperand);
+        calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
+        //System.out.println(calculation);
 
-        if (Objects.equals(operator, "+")) {
-            int intVal1 = Integer.parseInt(val1);
-            int intVal2 = Integer.parseInt(val2);
-            System.out.println("Sum: " + (intVal1 + intVal2));
+        currentlySelectedOperand = null;
+        firstNumber = result;
+        secondNumber = "0";
+    }
+
+
+    private void performSquare() {
+        storeOutput();
+        String result = String.valueOf((1+2));
+        currentlySelectedOperand = Operands.SQUARE; //set operand to the appropriate one button operation
+        //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
+        System.out.println("FIRSTNUMBER" + firstNumber);
+        System.out.println("SECONDNUMBER" + secondNumber);
+        System.out.println("OPERAND" + currentlySelectedOperand);
+        calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
+        //System.out.println(calculation);
+
+        currentlySelectedOperand = null;
+        firstNumber = result;
+        secondNumber = "0";
+
+    }
+
+    private void storeOutput() {
+        if(currentlySelectedOperand != null){
+            secondNumber = outputLabel.getText();
         }
-        else {
-            System.out.println("WRONG");
-            System.out.println(val1);
-            System.out.println(val2);
-            System.out.println(operator);
+        else{
+            firstNumber = outputLabel.getText();
+            secondNumber = "0";
         }
+        //Clear the output label?
+        outputLabel.setText("");
+
+
+    }
+
+    private void appendToOutputLabel(int numberAppended){
+        String currentText = outputLabel.getText();
+        outputLabel.setText(currentText + numberAppended);
+
     }
 }
