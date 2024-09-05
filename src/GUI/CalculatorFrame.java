@@ -21,12 +21,16 @@ public class CalculatorFrame {
         JFrame frame = new JFrame();
         JPanel mainPanel = new JPanel();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10,50,10,50));
-        mainPanel.setLayout(new GridLayout(2,1));
+        mainPanel.setLayout(new GridLayout(0,1));
         calc = new Calculate();
 
         outputLabel = new JLabel();
         outputLabel.setBorder(BorderFactory.createEtchedBorder());
         mainPanel.add(outputLabel);
+
+        JToggleButton conversionToggle = new JToggleButton("Base 4 <-> Base 10");
+        conversionToggle.addActionListener( e -> convertLabel(!conversionToggle.isSelected()));
+        mainPanel.add(conversionToggle);
 
         NumberButton zero = new NumberButton(0);
         NumberButton one = new NumberButton(1);
@@ -39,7 +43,14 @@ public class CalculatorFrame {
         buttonPanel.setLayout(new GridLayout(0,4));
 
         for(NumberButton button : numberButtons){
-            button.addActionListener(e -> appendToOutputLabel(button.getValue()));
+            button.addActionListener(e -> {
+                //Disabling of conversion must happen first
+                if(conversionToggle.isSelected()){
+                    conversionToggle.setSelected(false);
+                    convertLabel(true);
+                }
+                appendToOutputLabel(button.getValue());
+            });
             buttonPanel.add(button);
         }
 
@@ -84,6 +95,18 @@ public class CalculatorFrame {
         frame.setTitle("Quaternary Calculator");
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private void convertLabel(boolean intoBase4) {
+        if(intoBase4){
+            int base4 = Integer.parseInt(outputLabel.getText());
+           outputLabel.setText(Integer.toString(base4, 4));
+        }
+        else{
+            int base10 = Integer.parseInt(outputLabel.getText(), 4);
+            outputLabel.setText(String.valueOf(base10));
+        }
+
     }
 
     private void performEquals(String command) {
