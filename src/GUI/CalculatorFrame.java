@@ -105,23 +105,6 @@ public class CalculatorFrame {
     }
 
 
-    private void performSquare() {
-        storeOutput();
-        String result = String.valueOf((1+2));
-        currentlySelectedOperand = Operands.SQUARE; //set operand to the appropriate one button operation
-        //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
-        System.out.println("FIRSTNUMBER" + firstNumber);
-        System.out.println("SECONDNUMBER" + secondNumber);
-        System.out.println("OPERAND" + currentlySelectedOperand);
-        calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
-        //System.out.println(calculation);
-
-        currentlySelectedOperand = null;
-        firstNumber = result;
-        secondNumber = "0";
-
-    }
-
     private void storeOutput() {
         if(currentlySelectedOperand != null){
             secondNumber = outputLabel.getText();
