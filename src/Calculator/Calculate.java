@@ -18,31 +18,37 @@ public class Calculate {
                 String convertedSum = base10ToBase4(sum); //base 10 back to 4
                 System.out.println(convertedSum);
                 outputLabel.setText(convertedSum);
+                allowInput = false;
                 break;
             case SUBTRACT:
                 int difference = subtraction(num1, num2);
                 String convertedDifference = base10ToBase4(difference);
                 outputLabel.setText(convertedDifference);
+                allowInput = false;
                 break;
             case MULTIPLY:
                 int product = multiplication(num1, num2);
                 String convertedProduct = base10ToBase4(product);
                 outputLabel.setText(convertedProduct);
+                allowInput = false;
                 break;
             case DIVIDE:
                 int quotient = division(num1, num2);
                 String convertedQuotient = base10ToBase4(quotient);
                 outputLabel.setText(convertedQuotient);
+                allowInput = false;
                 break;
             case SQUARE:
                 int square = multiplication(num1,num1);
                 String convertedSquare = base10ToBase4(square);
                 outputLabel.setText(convertedSquare);
+                allowInput = false;
                 break;
             case SQUAREROOT:
                 int squareRoot = squareRoot(num1);
                 String convertedSquareRoot = base10ToBase4(squareRoot);
                 outputLabel.setText(convertedSquareRoot);
+                allowInput = false;
                 break;
 
         }
