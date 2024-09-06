@@ -65,16 +65,21 @@ public class CalculatorFrame {
         JButton equals = new JButton("=");
         JButton square = new JButton("x²");
         JButton squareRoot = new JButton("√");
+        JButton clearButton = new JButton("Clear All");
 
 
         equals.addActionListener(e -> performEquals(e.getActionCommand())); //sends actionCommand to performEquals method
         square.addActionListener(e -> performEquals(e.getActionCommand()));
         squareRoot.addActionListener(e -> performEquals(e.getActionCommand()));
+        clearButton.addActionListener((e) -> {
+            this.clearCalculator();  // Method to clear the state and reset
+        });
 
 
         buttonPanel.add(equals);
         buttonPanel.add(square);
         buttonPanel.add(squareRoot);
+        buttonPanel.add(clearButton);
 
         mainPanel.add(buttonPanel);
 
@@ -86,26 +91,26 @@ public class CalculatorFrame {
     }
 
     private void performEquals(String command) {
-        storeOutput();
-        String result = String.valueOf((1 + 2));
-        System.out.println(command);
-        //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
-        if (Objects.equals(command, "x²")) {
-            currentlySelectedOperand = Operands.SQUARE;
-        } else if (Objects.equals(command, "√")) {
-            currentlySelectedOperand = Operands.SQUAREROOT;
+        if (calc.canInput()) { //if false then you won't be able to click '=', 'x²', or '√' after getting result
+            storeOutput();
+            String result = String.valueOf((1 + 2));
+            //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
+            if (Objects.equals(command, "x²")) {
+                currentlySelectedOperand = Operands.SQUARE;
+            } else if (Objects.equals(command, "√")) {
+                currentlySelectedOperand = Operands.SQUAREROOT;
+            }
+            //System.out.println("FIRSTNUMBER " + firstNumber);
+            //System.out.println("SECONDNUMBER " + secondNumber);
+            //System.out.println("OPERAND " + currentlySelectedOperand);
+            calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
+
+
+            currentlySelectedOperand = null;
+            firstNumber = result;
+            secondNumber = "0";
         }
-        System.out.println("FIRSTNUMBER " + firstNumber);
-        System.out.println("SECONDNUMBER " + secondNumber);
-        System.out.println("OPERAND " + currentlySelectedOperand);
-        calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
-        //System.out.println(calculation);
-
-        currentlySelectedOperand = null;
-        firstNumber = result;
-        secondNumber = "0";
     }
-
 
     private void storeOutput() {
         if (currentlySelectedOperand != null) {
@@ -115,15 +120,23 @@ public class CalculatorFrame {
             secondNumber = "0";
         }
         //Clear the output label?
-        outputLabel.setText("");
+        if (calc.canInput()) { //if false then you can't click operand buttons after result
+            outputLabel.setText("");
+        }
     }
 
     private void appendToOutputLabel(int numberAppended) {
-        if (calc.canType()) {
+        if (calc.canInput()) { //if false then you can't click number buttons after getting result
             String currentText = outputLabel.getText();
             outputLabel.setText(currentText + numberAppended);
-        } else {
-            System.out.println("");
-        }
         }
     }
+
+    private void clearCalculator() {
+        calc.allowInput = true; //allows input again
+        this.firstNumber = "0";
+        this.secondNumber = "0";
+        this.currentlySelectedOperand = null;
+        this.outputLabel.setText("");
+    }
+}
