@@ -5,8 +5,6 @@ import Calculator.Operands;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 
@@ -102,19 +100,23 @@ public class CalculatorFrame {
     }
 
     private void convertLabel(boolean intoBase4) {
-        if(intoBase4){
-            int base4 = Integer.parseInt(outputLabel.getText());
+        String label = outputLabel.getText();
+        if(label.equals("")) {
+            return;
+        }
+        if(intoBase4) {
+            int base4 = Integer.parseInt(label);
            outputLabel.setText(Integer.toString(base4, 4));
         }
-        else{
-            int base10 = Integer.parseInt(outputLabel.getText(), 4);
+        else {
+            int base10 = Integer.parseInt(label, 4);
             outputLabel.setText(String.valueOf(base10));
         }
 
     }
 
     private void performEquals(String command) {
-        if (calc.canInput()) { //if false then you won't be able to click '=', 'x²', or '√' after getting result
+        if (calc.canInput() && currentlySelectedOperand != null) { //if false then you won't be able to click '=', 'x²', or '√' after getting result
             storeOutput();
             String result = String.valueOf((1 + 2));
             //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
@@ -138,6 +140,9 @@ public class CalculatorFrame {
     private void storeOutput() {
         if (currentlySelectedOperand != null) {
             secondNumber = outputLabel.getText();
+            if(secondNumber.equals("")) {
+                secondNumber = "0";
+            }
         } else {
             firstNumber = outputLabel.getText();
             secondNumber = "0";
