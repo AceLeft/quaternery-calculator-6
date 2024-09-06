@@ -17,11 +17,11 @@ public class CalculatorFrame {
     private final JLabel outputLabel;
     private final Calculate calc;
 
-    public CalculatorFrame(){
+    public CalculatorFrame() {
         JFrame frame = new JFrame();
         JPanel mainPanel = new JPanel();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10,50,10,50));
-        mainPanel.setLayout(new GridLayout(0,1));
+        mainPanel.setLayout(new GridLayout(0, 1));
         calc = new Calculate();
 
         outputLabel = new JLabel();
@@ -36,13 +36,13 @@ public class CalculatorFrame {
         NumberButton one = new NumberButton(1);
         NumberButton two = new NumberButton(2);
         NumberButton three = new NumberButton(3);
-        NumberButton[] numberButtons = {zero,one,two,three};
+        NumberButton[] numberButtons = {zero, one, two, three};
 
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(0,4));
+        buttonPanel.setLayout(new GridLayout(0, 4));
 
-        for(NumberButton button : numberButtons){
+        for(NumberButton button : numberButtons) {
             button.addActionListener(e -> {
                 //Disabling of conversion must happen first
                 if(conversionToggle.isSelected()){
@@ -52,6 +52,8 @@ public class CalculatorFrame {
                 appendToOutputLabel(button.getValue());
             });
             buttonPanel.add(button);
+
+
         }
 
         OperandButton addButton = new OperandButton(Operands.ADD, "+");
@@ -59,10 +61,11 @@ public class CalculatorFrame {
         OperandButton multiplyButton = new OperandButton(Operands.MULTIPLY, "*");
         OperandButton divideButton = new OperandButton(Operands.DIVIDE, "/");
 
+
         OperandButton[] operandButtons = {addButton, subtractButton, multiplyButton, divideButton};
 
 
-        for( OperandButton button : operandButtons){
+        for (OperandButton button : operandButtons) {
             button.addActionListener(e -> {
                 storeOutput();
                 currentlySelectedOperand = button.getOperand();
@@ -79,7 +82,8 @@ public class CalculatorFrame {
         equals.addActionListener(e -> performEquals(e.getActionCommand())); //sends actionCommand to performEquals method
         square.addActionListener(e -> performEquals(e.getActionCommand()));
         squareRoot.addActionListener(e -> performEquals(e.getActionCommand()));
-        clearButton.addActionListener((e) -> { this.clearCalculator();  // Method to clear the state and reset
+        clearButton.addActionListener((e) -> {
+            this.clearCalculator();  // Method to clear the state and reset
         });
 
 
@@ -110,48 +114,49 @@ public class CalculatorFrame {
     }
 
     private void performEquals(String command) {
-        storeOutput();
-        String result = String.valueOf((1+2));
-        System.out.println(command);
-        //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
-        if (Objects.equals(command, "x²")) {
-            currentlySelectedOperand = Operands.SQUARE;
-        }
-        else if (Objects.equals(command, "√")) {
-            currentlySelectedOperand = Operands.SQUAREROOT;
-        }
-        System.out.println("FIRSTNUMBER " + firstNumber);
-        System.out.println("SECONDNUMBER " + secondNumber);
-        System.out.println("OPERAND " + currentlySelectedOperand);
-        calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
-        //System.out.println(calculation);
+        if (calc.canInput()) { //if false then you won't be able to click '=', 'x²', or '√' after getting result
+            storeOutput();
+            String result = String.valueOf((1 + 2));
+            //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
+            if (Objects.equals(command, "x²")) {
+                currentlySelectedOperand = Operands.SQUARE;
+            } else if (Objects.equals(command, "√")) {
+                currentlySelectedOperand = Operands.SQUAREROOT;
+            }
+            //System.out.println("FIRSTNUMBER " + firstNumber);
+            //System.out.println("SECONDNUMBER " + secondNumber);
+            //System.out.println("OPERAND " + currentlySelectedOperand);
+            calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
 
-        currentlySelectedOperand = null;
-        firstNumber = result;
-        secondNumber = "0";
+
+            currentlySelectedOperand = null;
+            firstNumber = result;
+            secondNumber = "0";
+        }
     }
 
-
     private void storeOutput() {
-        if(currentlySelectedOperand != null){
+        if (currentlySelectedOperand != null) {
             secondNumber = outputLabel.getText();
-        }
-        else{
+        } else {
             firstNumber = outputLabel.getText();
             secondNumber = "0";
         }
         //Clear the output label?
-        outputLabel.setText("");
-
-
+        if (calc.canInput()) { //if false then you can't click operand buttons after result
+            outputLabel.setText("");
+        }
     }
 
-    private void appendToOutputLabel(int numberAppended){
-        String currentText = outputLabel.getText();
-        outputLabel.setText(currentText + numberAppended);
+    private void appendToOutputLabel(int numberAppended) {
+        if (calc.canInput()) { //if false then you can't click number buttons after getting result
+            String currentText = outputLabel.getText();
+            outputLabel.setText(currentText + numberAppended);
+        }
     }
 
     private void clearCalculator() {
+        calc.allowInput = true; //allows input again
         this.firstNumber = "0";
         this.secondNumber = "0";
         this.currentlySelectedOperand = null;

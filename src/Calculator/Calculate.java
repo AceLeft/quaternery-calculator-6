@@ -3,7 +3,10 @@ package Calculator;
 import javax.swing.*;
 
 public class Calculate {
-
+    public boolean allowInput = true;
+    public boolean canInput() {
+        return allowInput;
+    }//used to prevent user input after result (except clear)
     public void calculation(String val1, String val2, Operands operator, JLabel outputLabel) {
 
         int num1 = base4ToBase10(val1); //converts from base 4 to base 10
