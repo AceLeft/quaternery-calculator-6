@@ -4,6 +4,7 @@ import Calculator.Calculate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+
 public class CalculateTest {
     @Test
     public void base4ToBase10(){
