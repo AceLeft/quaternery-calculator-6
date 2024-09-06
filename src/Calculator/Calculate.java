@@ -4,6 +4,10 @@ import javax.swing.*;
 
 public class Calculate {
 
+    public boolean allowInput = true;
+    public boolean canType() {
+        return allowInput;
+    }
     public void calculation(String val1, String val2, Operands operator, JLabel outputLabel) {
 
         int num1 = Integer.parseInt(val1, 4); //converts from base 4 to base 10
@@ -15,6 +19,7 @@ public class Calculate {
                 String convertedSum = Integer.toString(sum, 4); //base 10 back to 4
                 System.out.println(convertedSum);
                 outputLabel.setText(convertedSum);
+                allowInput = false;
                 break;
             case SUBTRACT:
                 int difference = num1 - num2;

@@ -17,11 +17,11 @@ public class CalculatorFrame {
     private final JLabel outputLabel;
     private final Calculate calc;
 
-    public CalculatorFrame(){
+    public CalculatorFrame() {
         JFrame frame = new JFrame();
         JPanel mainPanel = new JPanel();
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10,50,10,50));
-        mainPanel.setLayout(new GridLayout(2,1));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
+        mainPanel.setLayout(new GridLayout(2, 1));
         calc = new Calculate();
 
         outputLabel = new JLabel();
@@ -32,15 +32,17 @@ public class CalculatorFrame {
         NumberButton one = new NumberButton(1);
         NumberButton two = new NumberButton(2);
         NumberButton three = new NumberButton(3);
-        NumberButton[] numberButtons = {zero,one,two,three};
+        NumberButton[] numberButtons = {zero, one, two, three};
 
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(0,4));
+        buttonPanel.setLayout(new GridLayout(0, 4));
 
-        for(NumberButton button : numberButtons){
+        for (NumberButton button : numberButtons) {
             button.addActionListener(e -> appendToOutputLabel(button.getValue()));
             buttonPanel.add(button);
+
+
         }
 
         OperandButton addButton = new OperandButton(Operands.ADD, "+");
@@ -48,10 +50,11 @@ public class CalculatorFrame {
         OperandButton multiplyButton = new OperandButton(Operands.MULTIPLY, "*");
         OperandButton divideButton = new OperandButton(Operands.DIVIDE, "/");
 
+
         OperandButton[] operandButtons = {addButton, subtractButton, multiplyButton, divideButton};
 
 
-        for( OperandButton button : operandButtons){
+        for (OperandButton button : operandButtons) {
             button.addActionListener(e -> {
                 storeOutput();
                 currentlySelectedOperand = button.getOperand();
@@ -84,13 +87,12 @@ public class CalculatorFrame {
 
     private void performEquals(String command) {
         storeOutput();
-        String result = String.valueOf((1+2));
+        String result = String.valueOf((1 + 2));
         System.out.println(command);
         //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
         if (Objects.equals(command, "x²")) {
             currentlySelectedOperand = Operands.SQUARE;
-        }
-        else if (Objects.equals(command, "√")) {
+        } else if (Objects.equals(command, "√")) {
             currentlySelectedOperand = Operands.SQUAREROOT;
         }
         System.out.println("FIRSTNUMBER " + firstNumber);
@@ -106,22 +108,22 @@ public class CalculatorFrame {
 
 
     private void storeOutput() {
-        if(currentlySelectedOperand != null){
+        if (currentlySelectedOperand != null) {
             secondNumber = outputLabel.getText();
-        }
-        else{
+        } else {
             firstNumber = outputLabel.getText();
             secondNumber = "0";
         }
         //Clear the output label?
         outputLabel.setText("");
-
-
     }
 
-    private void appendToOutputLabel(int numberAppended){
-        String currentText = outputLabel.getText();
-        outputLabel.setText(currentText + numberAppended);
-
+    private void appendToOutputLabel(int numberAppended) {
+        if (calc.canType()) {
+            String currentText = outputLabel.getText();
+            outputLabel.setText(currentText + numberAppended);
+        } else {
+            System.out.println("");
+        }
+        }
     }
-}

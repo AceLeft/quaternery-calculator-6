@@ -6,5 +6,6 @@ public enum Operands {
     MULTIPLY,
     DIVIDE,
     SQUARE,
-    SQUAREROOT
+    SQUAREROOT,
+
 }
