@@ -1,4 +1,9 @@
-Hunter Johns, Brooke Wright, Riley Jamison, Payton Hutsell
+TEAM MEMBER: ROLE
+Hunter Johns:
+Brooke Wright: GUI Structure
+Riley Jamison: 
+Payton Hutsell:
+
 
 Meeting 1: 9/1/2024, 10:30 am
 * Hunter and Brooke met in Bracken,
