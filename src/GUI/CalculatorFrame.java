@@ -15,6 +15,8 @@ public class CalculatorFrame {
     private final JLabel outputLabel;
     private final Calculate calc;
 
+    private boolean startNewInput = false;
+
     public CalculatorFrame() {
         JFrame frame = new JFrame();
         JPanel mainPanel = new JPanel();
@@ -97,8 +99,8 @@ public class CalculatorFrame {
 
         buttonPanel.add(equals);
         buttonPanel.add(clearButton);
-
         mainPanel.add(buttonPanel);
+
 
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,12 +129,17 @@ public class CalculatorFrame {
         if (currentlySelectedOperand != null) {
             storeOutput();
             //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
+            System.out.println("FIRSTNUMBER " + firstNumber);
+            System.out.println("SECONDNUMBER " + secondNumber);
+            System.out.println("OPERAND " + currentlySelectedOperand);
 
             calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
             //calculation sets the output text
+            startNewInput = true;
             currentlySelectedOperand = null;
-            firstNumber = outputLabel.getText();
+            firstNumber = outputLabel.getText(); //sets first number to result after calculation
             secondNumber = "0";
+            System.out.println(firstNumber);
         }
     }
 
@@ -146,19 +153,25 @@ public class CalculatorFrame {
             firstNumber = outputLabel.getText();
             secondNumber = "0";
         }
+
         //clear text
         outputLabel.setText("");
     }
 
     private void appendToOutputLabel(int numberAppended) {
-        if (calc.canInput()) { //if false then you can't click number buttons after getting result
+        if (!startNewInput || currentlySelectedOperand != null) { //lets you input a string like normal
             String currentText = outputLabel.getText();
             outputLabel.setText(currentText + numberAppended);
         }
+        else { //if startNewInput is true it clears first number (result of your first operation) and sets label to first number clicked, resets boolean
+            firstNumber = "";
+            outputLabel.setText(String.valueOf(numberAppended));
+            startNewInput = false;
+        }
+
     }
 
     private void clearCalculator() {
-        calc.allowInput = true; //allows input again
         this.firstNumber = "0";
         this.secondNumber = "0";
         this.currentlySelectedOperand = null;

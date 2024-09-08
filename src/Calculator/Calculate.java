@@ -1,12 +1,10 @@
 package Calculator;
 
+
 import javax.swing.*;
 
 public class Calculate {
-    public boolean allowInput = true;
-    public boolean canInput() {
-        return allowInput;
-    }//used to prevent user input after result (except clear)
+
     public void calculation(String val1, String val2, Operands operator, JLabel outputLabel) {
 
         int num1 = base4ToBase10(val1); //converts from base 4 to base 10
@@ -16,39 +14,38 @@ public class Calculate {
             case ADD:
                 int sum = addition(num1, num2);
                 String convertedSum = base10ToBase4(sum); //base 10 back to 4
-                System.out.println(convertedSum);
                 outputLabel.setText(convertedSum);
-                allowInput = false;
+                //allowInput = false;
                 break;
             case SUBTRACT:
                 int difference = subtraction(num1, num2);
                 String convertedDifference = base10ToBase4(difference);
                 outputLabel.setText(convertedDifference);
-                allowInput = false;
+                //allowInput = false;
                 break;
             case MULTIPLY:
                 int product = multiplication(num1, num2);
                 String convertedProduct = base10ToBase4(product);
                 outputLabel.setText(convertedProduct);
-                allowInput = false;
+                //allowInput = false;
                 break;
             case DIVIDE:
                 int quotient = division(num1, num2);
                 String convertedQuotient = base10ToBase4(quotient);
                 outputLabel.setText(convertedQuotient);
-                allowInput = false;
+                //allowInput = false;
                 break;
             case SQUARE:
                 int square = multiplication(num1,num1);
                 String convertedSquare = base10ToBase4(square);
                 outputLabel.setText(convertedSquare);
-                allowInput = false;
+                //allowInput = false;
                 break;
             case SQUAREROOT:
                 int squareRoot = squareRoot(num1);
                 String convertedSquareRoot = base10ToBase4(squareRoot);
                 outputLabel.setText(convertedSquareRoot);
-                allowInput = false;
+                //allowInput = false;
                 break;
 
         }
