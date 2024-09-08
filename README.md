@@ -2,7 +2,7 @@ TEAM MEMBER: ROLE
 * Hunter Johns: Unit Testing
 * Brooke Wright: GUI Structure
 * Riley Jamison: Calculator Logic & UX
-* Payton Hutsell:
+* Payton Hutsell: GUI support
 
 
 Meeting 1: 9/1/2024, 10:30 am
