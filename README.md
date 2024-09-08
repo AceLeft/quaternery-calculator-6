@@ -1,5 +1,5 @@
 TEAM MEMBER: ROLE
-* Hunter Johns:
+* Hunter Johns: Unit Testing
 * Brooke Wright: GUI Structure
 * Riley Jamison: Calculator Logic & UX
 * Payton Hutsell:
@@ -31,6 +31,11 @@ DISCUSSION:
 
 Meeting 4: 9/4/2024, 3:00 pm
 * Riley and Hunter met briefly at Bracken
+
+  DISCUSSION:
+* Discussed work done since last meeting
+* Discussed solution implementation
+* Discussed a new approach to conversions
 
 Meeting 5: 9/5/2024, 5:00 pm
 * Riley, Hunter and Brooke met in Robert bell
