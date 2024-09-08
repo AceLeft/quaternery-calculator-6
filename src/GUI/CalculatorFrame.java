@@ -5,7 +5,6 @@ import Calculator.Operands;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 
 public class CalculatorFrame {
@@ -129,9 +128,6 @@ public class CalculatorFrame {
         if (currentlySelectedOperand != null) {
             storeOutput();
             //above, put the connection to calculator, sending firstNumber, currentOperand, and  secondNumber
-            System.out.println("FIRSTNUMBER " + firstNumber);
-            System.out.println("SECONDNUMBER " + secondNumber);
-            System.out.println("OPERAND " + currentlySelectedOperand);
 
             calc.calculation(firstNumber, secondNumber, currentlySelectedOperand, outputLabel);
             //calculation sets the output text
@@ -139,7 +135,6 @@ public class CalculatorFrame {
             currentlySelectedOperand = null;
             firstNumber = outputLabel.getText(); //sets first number to result after calculation
             secondNumber = "0";
-            System.out.println(firstNumber);
         }
     }
 
@@ -163,7 +158,9 @@ public class CalculatorFrame {
             String currentText = outputLabel.getText();
             outputLabel.setText(currentText + numberAppended);
         }
-        else { //if startNewInput is true it clears first number (result of your first operation) and sets label to first number clicked, resets boolean
+        else {
+            //if startNewInput is true it clears first number (result of your first operation)
+            // and sets label to first number clicked, resets boolean
             firstNumber = "";
             outputLabel.setText(String.valueOf(numberAppended));
             startNewInput = false;
