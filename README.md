@@ -1,7 +1,7 @@
 TEAM MEMBER: ROLE
 * Hunter Johns:
 * Brooke Wright: GUI Structure
-* Riley Jamison: 
+* Riley Jamison: Calculator Logic & UX
 * Payton Hutsell:
 
 
