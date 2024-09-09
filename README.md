@@ -66,7 +66,7 @@ DISCUSSION:
 Meeting 4: 9/4/2024, 3:00 pm
 * Riley and Hunter met briefly at Bracken
 
-  DISCUSSION:
+DISCUSSION:
 * Discussed work done since last meeting
 * Discussed solution implementation
 * Discussed a new approach to conversions
